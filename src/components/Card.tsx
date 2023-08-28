@@ -4,7 +4,7 @@ import { StaticImageData } from "next/image";
 import Image from "next/image";
 import Arrow from "../assets/headerReadMoreArrow.svg";
 
-function Card({ image, title, description, author }: Props) {
+function Card({ image, title, description, author = "Writer" }: Props) {
 
   return (
     <div className="w-[504px] bg-[#D9D9D9] rounded-3xl shrink-0">
@@ -40,6 +40,6 @@ type Props = {
   image: StaticImageData;
   title: string;
   description: string;
-  author: string
+  author?: string
 };
 export default Card;
