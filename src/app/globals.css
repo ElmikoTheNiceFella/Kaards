@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#nav-list > li {
+  cursor: pointer;
+  user-select: none;
+}
+
+/* @media (prefers-reduced-motion: no-preference) {
+  .rotation-animation {
+    rotate: 0deg;
+    animation: rotation-animation 60s linear infinite;
+  }
+  @keyframes rotation-animation {
+    to {
+      rotate: 360deg;
+    }
+  }
+} */
