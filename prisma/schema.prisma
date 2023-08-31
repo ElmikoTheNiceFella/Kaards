@@ -12,14 +12,16 @@ datasource db {
 
 model user {
   id String @id @default(uuid())
-  name String
-  email String
+  username String @unique
+  email String @unique
   password String
+  createdAt DateTime @default(now())
   kaards card[] @relation("Card")
 }
 
 model card {
   cardId String @id @default(uuid())
+  imageURL String
   title String
   details String
   author user @relation("Card", fields: [cardId], references: [id])
