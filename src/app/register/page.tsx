@@ -1,10 +1,30 @@
 "use client";
-import React, { useState } from "react";
+import { useRouter } from "next/router";
+import React, { FormEvent, useState } from "react";
 
 function Login() {
   const [usernameValue, setUsernameValue] = useState("");
+  const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
-  const [confirmPasswordValue, setConfirmPasswordValue] = useState("");
+
+  const handleSubmit = async(e:FormEvent<HTMLButtonElement>) => {
+    
+    e.preventDefault();
+    
+    const response = await fetch('/api/user', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: usernameValue,
+        email: emailValue,
+        password: passwordValue
+      })
+    })
+
+    response.ok ? console.log("Success") : console.error("Registration Error");
+  }
 
   return (
     <>
@@ -32,6 +52,18 @@ function Login() {
           />
         </div>
         <div className="m-auto w-96 pt-8 grid place-content-center">
+          <p className="text-white lexend ml-4">&bull; E-mail</p>
+          <input
+            type="email"
+            style={{
+              width: "24rem",
+            }}
+            value={emailValue}
+            onChange={(e) => setEmailValue(e.target.value)}
+            className="rounded-full h-12 lexend px-8"
+          />
+        </div>
+        <div className="m-auto w-96 pt-8 grid place-content-center">
           <p className="text-white lexend ml-4">&bull; Password</p>
           <input
             type="password"
@@ -43,20 +75,8 @@ function Login() {
             className="rounded-full h-12 lexend px-8"
           />
         </div>
-        <div className="m-auto w-96 pt-8 grid place-content-center">
-          <p className="text-white lexend ml-4">&bull; Confirm Password</p>
-          <input
-            type="password"
-            style={{
-              width: "24rem",
-            }}
-            value={confirmPasswordValue}
-            onChange={(e) => setConfirmPasswordValue(e.target.value)}
-            className="rounded-full h-12 lexend px-8"
-          />
-        </div>
         <div className="m-auto w-96 pt-24 h-12 grid place-content-center">
-          <button className="w-96 h-12 border-white border-2 text-white rounded-full">
+          <button onClick={handleSubmit} className="w-96 h-12 border-white border-2 text-white rounded-full">
             REGISTER
           </button>
           <div className="w-full my-4 h-[1px] rounded-full bg-white"></div>

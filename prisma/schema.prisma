@@ -10,7 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model user {
+model users {
   id String @id @default(uuid())
   username String @unique
   email String @unique
@@ -24,5 +24,5 @@ model card {
   imageURL String
   title String
   details String
-  author user @relation("Card", fields: [cardId], references: [id])
+  author users @relation("Card", fields: [cardId], references: [id])
 }

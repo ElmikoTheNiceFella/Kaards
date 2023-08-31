@@ -9,11 +9,11 @@ export async function POST(req: Request) {
     // Assigning Data to variables
     const { username, email, password } = body;
     // Checking if the username already exists
-    const usernameAlreadyExists = await db.user.findUnique({
+    const usernameAlreadyExists = await db.users.findUnique({
       where: { username },
     });
     // Checking if the email already exists
-    const emailAlreadyExists = await db.user.findUnique({
+    const emailAlreadyExists = await db.users.findUnique({
       where: { email },
     });
     // Actions regarding conflicts
@@ -31,7 +31,7 @@ export async function POST(req: Request) {
     // Hashing password
     const hashedPassword = await hash(password, 10);
     // Creating a new user
-    const newUser = await db.user.create({
+    const newUser = await db.users.create({
       data: {
         username,
         email,
@@ -43,6 +43,9 @@ export async function POST(req: Request) {
       { status: 201 }
     );
   } catch (error: any) {
-    console.error(error.message);
+    return NextResponse.json(
+      { user: null, message: "Server Error" },
+      { status: 500 }
+    );
   }
 }
