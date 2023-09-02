@@ -1,11 +1,13 @@
 "use client";
 import { useRouter } from "next/router";
 import React, { FormEvent, useState } from "react";
+import "../globals.css";
 
 function Login() {
   const [usernameValue, setUsernameValue] = useState("");
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async(e:FormEvent<HTMLButtonElement>) => {
     
@@ -23,11 +25,34 @@ function Login() {
       })
     })
 
-    response.ok ? console.log("Success") : console.error("Registration Error");
+    if (response.ok) {
+      
+    } else {
+      console.log("Registration failed")
+    }
   }
 
   return (
     <>
+      <div className="absolute h-screen hidden place-content-center w-full inset-0 bg-gray-500 bg-opacity-50">
+        <div className="w-96 px-56 py-32 h-72 rounded-xl flex justify-center bg-white">
+          <div
+            id="register-loading"
+            style={{
+              display: loading ? "flex" : "none"
+            }}
+            className="gap-4 absolute"
+          >
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div
+                key={i}
+                style={{ animationDelay: `${i * 100}ms` }}
+                className="w-6 h-6 anim rounded-full register-anim bg-[#202020]"
+              ></div>
+            ))}
+          </div>
+        </div>
+      </div>
       <div
         id="login-page"
         style={{
@@ -76,7 +101,10 @@ function Login() {
           />
         </div>
         <div className="m-auto w-96 pt-24 h-12 grid place-content-center">
-          <button onClick={handleSubmit} className="w-96 h-12 border-white border-2 text-white rounded-full">
+          <button
+            onClick={handleSubmit}
+            className="w-96 h-12 border-white border-2 text-white rounded-full"
+          >
             REGISTER
           </button>
           <div className="w-full my-4 h-[1px] rounded-full bg-white"></div>

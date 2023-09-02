@@ -18,3 +18,22 @@
     }
   }
 } */
+
+.register-anim {
+  animation: loading 1s ease infinite;
+}
+
+@keyframes loading {
+  0% {
+    scale: 0;
+  }
+  25% {
+    scale: 1;
+  }
+  50% {
+    scale: 0;
+  }
+  100% {
+    scale: 0;
+  }
+}
