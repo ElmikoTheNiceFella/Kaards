@@ -7,8 +7,12 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { db } from "@/db";
 
 
-const loginHandler: NextAuthOptions = NextAuth({
+export const loginHandler: NextAuthOptions = NextAuth({
   adapter: PrismaAdapter(db),
+  secret: process.env.NEXTAUTH_SECRET,
+  session: {
+    strategy: "jwt"
+  },
   pages: {
     signIn: "/login",
   },
