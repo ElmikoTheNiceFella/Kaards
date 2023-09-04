@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from "next/router";
 import React, { FormEvent, useState } from "react";
-import "../globals.css";
+import "../../globals.css";
 
 function Login() {
   const [usernameValue, setUsernameValue] = useState("");

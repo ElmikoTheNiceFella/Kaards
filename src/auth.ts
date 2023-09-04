@@ -6,12 +6,11 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { db } from "@/db";
 
-
 export const loginHandler: NextAuthOptions = NextAuth({
   adapter: PrismaAdapter(db),
   secret: process.env.NEXTAUTH_SECRET,
   session: {
-    strategy: "jwt"
+    strategy: "jwt",
   },
   pages: {
     signIn: "/login",
@@ -24,7 +23,6 @@ export const loginHandler: NextAuthOptions = NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-
         if (!credentials?.username || !credentials.password) return null;
 
         const user = await db.users.findUnique({
@@ -45,6 +43,26 @@ export const loginHandler: NextAuthOptions = NextAuth({
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        return {
+          ...token,
+          username: user.username,
+        };
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      console.log("Funny")
+      return {
+        ...session,
+        user: {
+          ...session.user
+        },
+      };
+    },
+  },
 });
 
 export { loginHandler as GET, loginHandler as POST };
